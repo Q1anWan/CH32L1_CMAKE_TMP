@@ -1,0 +1,31 @@
+{
+    "toolchain": {
+        "name": "WCH RISC-V Toolchain",
+        "version": "V210",
+        "basePath": "${config:WCH_TOOLCHAIN_BASE}",
+        "compiler": {
+            "gcc": "${config:WCH_TOOLCHAIN_BASE}/${config:WCH_GCC_NAME}/bin/riscv-wch-elf-gcc",
+            "gxx": "${config:WCH_TOOLCHAIN_BASE}/${config:WCH_GCC_NAME}/bin/riscv-wch-elf-g++",
+            "gdb": "${config:WCH_TOOLCHAIN_BASE}/${config:WCH_GCC_NAME}/bin/riscv-wch-elf-gdb"
+        },
+        "openocd": {
+            "executable": "${config:WCH_TOOLCHAIN_BASE}/OpenOCD/OpenOCD/bin/openocd",
+            "searchDir": "${config:WCH_TOOLCHAIN_BASE}/OpenOCD/OpenOCD/share/openocd/scripts",
+            "configFile": "${config:WCH_TOOLCHAIN_BASE}/OpenOCD/OpenOCD/bin/wch-riscv.cfg",
+            "chipId": "CH32L10x"
+        },
+        "debug": {
+            "gdbCommands": [
+                "set mem inaccessible-by-default off",
+                "set architecture riscv:rv32",
+                "set remotetimeout unlimited",
+                "set disassembler-options xw"
+            ],
+            "ports": {
+                "gdb": 3333,
+                "telnet": 4444,
+                "tcl": 6666
+            }
+        }
+    }
+}
