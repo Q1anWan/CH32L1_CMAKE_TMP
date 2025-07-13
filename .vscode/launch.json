@@ -12,14 +12,14 @@
                 "wch-riscv.cfg"
             ],
             "searchDir": [
-                "${config:WCH_TOOLCHAIN_BASE}/OpenOCD/OpenOCD/share/openocd/scripts"
+                "${config:WCH_TOOLCHAIN_BASE}/OpenOCD/OpenOCD/bin"
             ],
             "serverpath": "${config:WCH_TOOLCHAIN_BASE}/OpenOCD/OpenOCD/bin/openocd",
             "openOCDLaunchCommands": [
                 "init",
                 "halt"
             ],
-            "openOCDPreConfigLaunchCommands": [
+            "preLaunchCommands": [
                 "set mem inaccessible-by-default off",
                 "set architecture riscv:rv32",
                 "set remotetimeout unlimited",
@@ -29,7 +29,7 @@
             "toolchainPrefix": "riscv-wch-elf",
             "device": "CH32L103C8T6",
             "interface": "swd",
-            "runToEntryPoint": "main",
+            "runToEntryPoint": "handle_reset",
             "showDevDebugOutput": "raw",
             "preLaunchTask": "CMake Build",
             "postLaunchCommands": [
@@ -39,7 +39,7 @@
             "svdFile": "${workspaceFolder}/.vscode/CH32L103xx.svd"
         },
         {
-            "name": "Attach to CH32L103C8T6",
+            "name": "Attach to Chip",
             "type": "cortex-debug",
             "request": "attach",
             "servertype": "openocd",
@@ -49,14 +49,14 @@
                 "wch-riscv.cfg"
             ],
             "searchDir": [
-                "${config:WCH_TOOLCHAIN_BASE}/OpenOCD/OpenOCD/share/openocd/scripts"
+                "${config:WCH_TOOLCHAIN_BASE}/OpenOCD/OpenOCD/bin"
             ],
             "serverpath": "${config:WCH_TOOLCHAIN_BASE}/OpenOCD/OpenOCD/bin/openocd",
             "gdbPath": "${config:WCH_TOOLCHAIN_BASE}/${config:WCH_GCC_NAME}/bin/riscv-wch-elf-gdb",
             "toolchainPrefix": "riscv-wch-elf",
             "device": "CH32L103C8T6",
             "showDevDebugOutput": "raw",
-            "openOCDPreConfigLaunchCommands": [
+            "preLaunchCommands": [
                 "set mem inaccessible-by-default off",
                 "set architecture riscv:rv32",
                 "set remotetimeout unlimited",
@@ -65,98 +65,33 @@
             "svdFile": "${workspaceFolder}/.vscode/CH32L103xx.svd"
         },
         {
-            "name": "Download Firmware",
-            "type": "cortex-debug",
-            "request": "launch",
-            "servertype": "openocd",
-            "cwd": "${workspaceFolder}",
-            "executable": "${workspaceFolder}/build/${config:WCH_ELF_FILENAME}",
-            "configFiles": [
-                "wch-riscv.cfg"
-            ],
-            "searchDir": [
-                "${config:WCH_TOOLCHAIN_BASE}/OpenOCD/OpenOCD/share/openocd/scripts"
-            ],
-            "serverpath": "${config:WCH_TOOLCHAIN_BASE}/OpenOCD/OpenOCD/bin/openocd",
-            "gdbPath": "${config:WCH_TOOLCHAIN_BASE}/${config:WCH_GCC_NAME}/bin/riscv-wch-elf-gdb",
-            "toolchainPrefix": "riscv-wch-elf",
-            "device": "CH32L103C8T6",
-            "preLaunchTask": "CMake Build",
-            "showDevDebugOutput": "raw",
-            "openOCDLaunchCommands": [
-                "init",
-                "halt"
-            ],
-            "openOCDPreConfigLaunchCommands": [
-                "set mem inaccessible-by-default off",
-                "set architecture riscv:rv32",
-                "set remotetimeout unlimited"
-            ],
-            "postLaunchCommands": [
-                "monitor reset halt",
-                "load",
-                "monitor reset",
-                "quit"
-            ],
-            "breakAfterReset": false,
-            "runToEntryPoint": "",
-            "svdFile": "${workspaceFolder}/.vscode/CH32L103xx.svd"
-        },
-        {
             "name": "Download and Run",
-            "type": "cortex-debug",
+            "type": "node",
             "request": "launch",
-            "servertype": "openocd",
-            "cwd": "${workspaceFolder}",
-            "executable": "${workspaceFolder}/build/${config:WCH_ELF_FILENAME}",
-            "configFiles": [
-                "wch-riscv.cfg"
-            ],
-            "searchDir": [
-                "${config:WCH_TOOLCHAIN_BASE}/OpenOCD/OpenOCD/share/openocd/scripts"
-            ],
-            "serverpath": "${config:WCH_TOOLCHAIN_BASE}/OpenOCD/OpenOCD/bin/openocd",
-            "gdbPath": "${config:WCH_TOOLCHAIN_BASE}/${config:WCH_GCC_NAME}/bin/riscv-wch-elf-gdb",
-            "toolchainPrefix": "riscv-wch-elf",
-            "device": "CH32L103C8T6",
-            "preLaunchTask": "CMake Build",
-            "showDevDebugOutput": "raw",
-            "openOCDLaunchCommands": [
+            "runtimeExecutable": "${config:WCH_TOOLCHAIN_BASE}/OpenOCD/OpenOCD/bin/openocd",
+            "args": [
+                "-s",
+                "${config:WCH_TOOLCHAIN_BASE}/OpenOCD/OpenOCD/share/openocd/scripts",
+                "-f",
+                "${config:WCH_TOOLCHAIN_BASE}/OpenOCD/OpenOCD/bin/wch-riscv.cfg",
+                "-c",
+                "chip_id CH32L10x",
+                "-c",
                 "init",
-                "halt"
+                "-c",
+                "halt",
+                "-c",
+                "program ${workspaceFolder}/build/${config:WCH_ELF_FILENAME} verify reset",
+                "-c",
+                "exit"
             ],
-            "openOCDPreConfigLaunchCommands": [
-                "set mem inaccessible-by-default off",
-                "set architecture riscv:rv32",
-                "set remotetimeout unlimited"
-            ],
-            "postLaunchCommands": [
-                "monitor reset halt",
-                "load",
-                "monitor reset",
-                "continue",
-                "quit"
-            ],
-            "breakAfterReset": false,
-            "runToEntryPoint": "",
-            "svdFile": "${workspaceFolder}/.vscode/CH32L103xx.svd"
-        },
-        {
-            "name": "No Debug Download",
-            "type": "cortex-debug",
-            "request": "launch",
-            "servertype": "external",
-            "cwd": "${workspaceFolder}",
-            "executable": "${workspaceFolder}/build/${config:WCH_ELF_FILENAME}",
-            "gdbPath": "${config:WCH_TOOLCHAIN_BASE}/${config:WCH_GCC_NAME}/bin/riscv-wch-elf-gdb",
-            "gdbTarget": "localhost:3333",
-            "preLaunchTask": "Flash with OpenOCD",
-            "showDevDebugOutput": "none",
-            "postLaunchCommands": [
-                "quit"
-            ],
-            "runToEntryPoint": "",
-            "breakAfterReset": false
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "preLaunchTask": "CMake Build"
         }
     ]
 }
