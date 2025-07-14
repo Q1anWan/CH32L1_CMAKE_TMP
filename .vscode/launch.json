@@ -31,7 +31,7 @@
             "interface": "swd",
             "runToEntryPoint": "handle_reset",
             "showDevDebugOutput": "raw",
-            "preLaunchTask": "CMake Build",
+            "preLaunchTask": "CMake-kit: Build",
             "postLaunchCommands": [
                 "monitor reset halt",
                 "load"

@@ -7,6 +7,8 @@
         "marus25.cortex-debug",
         "dan-c-underwood.arm",
         "zixuanwang.linkerscript",
-        "ms-vscode.hexeditor"
+        "ms-vscode.hexeditor",
+        "joaompinto.vscode-graphviz",
+        "tintinweb.graphviz-interactive-preview"
     ]
 }

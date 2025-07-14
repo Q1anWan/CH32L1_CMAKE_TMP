@@ -16,8 +16,16 @@
                 "kind": "build",
                 "isDefault": true
             },
-            "dependsOn": "CMake-kit: Configure",
             "problemMatcher": []
+        },
+        {
+            "label": "CMake-kit: Rebuild",
+            "type": "cmake",
+            "command": "cleanRebuild",
+            "group": "build",
+            "problemMatcher": [],
+            "dependsOn": "CMake-kit: Configure",
+            "detail": "Clean and rebuild the entire project"
         },
         {
             "label": "CMake-kit: Clean",
@@ -27,15 +35,7 @@
             "problemMatcher": []
         },
         {
-            "label": "CMake-kit: Clean Rebuild",
-            "type": "cmake",
-            "command": "cleanRebuild",
-            "group": "build",
-            "problemMatcher": [],
-            "detail": "Clean and rebuild the entire project"
-        },
-        {
-            "label": "Flash with OpenOCD",
+            "label": "Build & Flash",
             "type": "shell",
             "command": "${config:WCH_TOOLCHAIN_BASE}/OpenOCD/OpenOCD/bin/openocd",
             "args": [
@@ -66,12 +66,25 @@
             "detail": "Flash firmware directly using OpenOCD command line"
         },
         {
-            "label": "Build & Flash",
-            "dependsOrder": "sequence",
-            "dependsOn": [
-                "CMake-kit: Build",
-                "Flash with OpenOCD"
-            ]
+            "label": "Generate Documentation",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "--build",
+                "build",
+                "--target",
+                "doc_doxygen"
+            ],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "problemMatcher": [],
+            "dependsOn": "CMake-kit: Build",
+            "detail": "Generate API documentation using Doxygen"
         },
     ]
 }

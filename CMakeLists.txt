@@ -56,6 +56,9 @@ add_compile_options(
         $<$<COMPILE_LANGUAGE:ASM>:assembler-with-cpp>
 )
 
+# 工具查找 (可选)
+find_package(Doxygen OPTIONAL_COMPONENTS dot)
+
 # ——————————————————————————————————————————————
 # 3. 构建类型相关
 # ——————————————————————————————————————————————
@@ -112,7 +115,7 @@ set(LINKER_SCRIPT ${CMAKE_SOURCE_DIR}/Ld/Link.ld)
 add_link_options(
 #        -v                              # verbose
         -nostartfiles
-        --specs=nano.specs
+        # --specs=nano.specs
         --specs=nosys.specs
         -Wl,-gc-sections
         -Wl,--print-memory-usage
@@ -142,3 +145,45 @@ add_custom_target(size_info ALL
         DEPENDS ${PROJECT_NAME}.elf
         COMMENT "Showing binary size"
 )
+
+if(DOXYGEN_FOUND)
+    message(STATUS "Doxygen found: ${DOXYGEN_EXECUTABLE}")
+    
+    set(DOXYGEN_IN ${CMAKE_SOURCE_DIR}/.vscode/Doxyfile.in)
+    set(DOXYGEN_OUT ${CMAKE_BINARY_DIR}/docs)
+    
+    # 自动收集所有输入目录
+    set(DOXYGEN_INPUT_DIRS "")
+    foreach(dir Core Debug Peripheral/src Peripheral/inc Startup User)
+        if(EXISTS ${CMAKE_SOURCE_DIR}/${dir})
+            list(APPEND DOXYGEN_INPUT_DIRS ${CMAKE_SOURCE_DIR}/${dir})
+        endif()
+    endforeach()
+    
+    # 将目录列表转换为空格分隔的字符串
+    string(REPLACE ";" " " DOXYGEN_INPUT "${DOXYGEN_INPUT_DIRS}")
+    
+    # 设置其他 Doxygen 变量
+    set(DOXYGEN_PROJECT_NAME "CH32L103 SimulateCDC Project")
+    set(DOXYGEN_PROJECT_BRIEF "USB CDC simulation for CH32L103 RISC-V microcontroller")
+    set(DOXYGEN_OUTPUT_DIRECTORY ${DOXYGEN_OUT})
+    
+    # 检查模板文件是否存在
+    if(EXISTS ${DOXYGEN_IN})
+        # 配置 Doxygen 文件
+        configure_file(${DOXYGEN_IN} ${CMAKE_BINARY_DIR}/Doxyfile @ONLY)
+        
+        add_custom_target(doc_doxygen
+            COMMAND ${DOXYGEN_EXECUTABLE} ${CMAKE_BINARY_DIR}/Doxyfile
+            WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+            COMMENT "Generating API documentation with Doxygen"
+            VERBATIM)
+            
+        message(STATUS "Doxygen documentation target 'doc_doxygen' created")
+        message(STATUS "Input directories: ${DOXYGEN_INPUT}")
+    else()
+        message(WARNING "Doxyfile.in template not found at ${DOXYGEN_IN}, skipping documentation target")
+    endif()
+else()
+    message(STATUS "Doxygen not found, documentation will not be generated")
+endif()

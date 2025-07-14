@@ -6,7 +6,7 @@
 注意: 
 1. 必须使用CH32魔改的OpenOCD
 2. 必须使用CH32魔改的DAP-Link(WLink)
-3. 
+ 
 ### 1. 修改工具链基础路径
 
 编辑 `.vscode/settings.json` 文件中的 `WCH_TOOLCHAIN_BASE` 变量：
@@ -98,6 +98,8 @@ export WCH_TOOLCHAIN_BASE="/opt/MRS_Toolchain_Linux_x64_V210"
 - 包含Configure, Build, Clean等操作
 ### 2. OpenOCD工具
 - 包含Flash操作 
+### 3. Doxygen工具
+- 生成HTML文档
 
 ## 调试配置说明
 
