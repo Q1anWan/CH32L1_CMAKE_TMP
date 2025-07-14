@@ -8,9 +8,14 @@
         "environmentVariables": {
             "PATH": "${config:WCH_TOOLCHAIN_BASE}/${config:WCH_GCC_NAME}/bin:${env:PATH}"
         },
-        "toolchainFile": "",
         "preferredGenerator": {
             "name": "Ninja"
+        },
+        "cmakeSettings": {
+            "CMAKE_FIND_ROOT_PATH": "${config:WCH_TOOLCHAIN_BASE}/${config:WCH_GCC_NAME}/riscv-wch-elf",
+            "CMAKE_SYSTEM_NAME": "Generic",
+            "CMAKE_SYSROOT": "${config:WCH_TOOLCHAIN_BASE}/${config:WCH_GCC_NAME}/riscv-wch-elf",
+            "CMAKE_BUILD_TYPE": "${config:BUILD_LEVEL}"
         }
     }
 ]

@@ -12,7 +12,7 @@
                 "build",
                 "-G",
                 "Ninja",
-                "-DCMAKE_BUILD_TYPE=Debug",
+                "-DCMAKE_BUILD_TYPE=${config:BUILD_LEVEL}",
                 "-DCMAKE_C_COMPILER=${config:WCH_TOOLCHAIN_BASE}/${config:WCH_GCC_NAME}/bin/riscv-wch-elf-gcc",
                 "-DCMAKE_CXX_COMPILER=${config:WCH_TOOLCHAIN_BASE}/${config:WCH_GCC_NAME}/bin/riscv-wch-elf-g++"
             ],
@@ -50,6 +50,15 @@
             "dependsOn": "CMake Configure"
         },
         {
+            "label": "Build & Flash",
+            "dependsOrder": "sequence",
+            "dependsOn": [
+                "CMake Configure",
+                "CMake Build",
+                "Flash with OpenOCD"
+            ]
+        },
+        {
             "label": "CMake Clean",
             "type": "shell",
             "command": "cmake",
@@ -67,22 +76,6 @@
                 "panel": "shared"
             },
             "problemMatcher": []
-        },
-        {
-            "label": "Build and Show Binary Info",
-            "type": "shell",
-            "command": "echo",
-            "args": [
-                "Build completed! Use 'Download Firmware' from Run and Debug panel to flash the firmware."
-            ],
-            "group": "build",
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": false,
-                "panel": "shared"
-            },
-            "dependsOn": "CMake Build"
         },
         {
             "label": "Flash with OpenOCD",

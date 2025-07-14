@@ -11,7 +11,8 @@
 ```json
 {
     "WCH_TOOLCHAIN_BASE": "/your/toolchain/path",
-    "WCH_ELF_FILENAME": "RISCV-LED.elf"
+    "WCH_ELF_FILENAME": "RISCV-LED.elf",
+    "BUILD_LEVEL": "RelWithDebInfo"
 }
 ```
 
@@ -89,6 +90,12 @@ export WCH_TOOLCHAIN_BASE="/opt/MRS_Toolchain_Linux_x64_V210"
 - ✅ RISC-V架构专用GDB命令
 - ✅ 抽象化ELF文件名配置
 
+## Run Tasks说明
+### 1. CMake工具
+- 包含Configure, Build, Clean操作
+### 2. OpenOCD工具
+- 包含Flash操作 
+
 ## 调试配置说明
 
 ### 1. Debug with WCH-Link
@@ -97,25 +104,14 @@ export WCH_TOOLCHAIN_BASE="/opt/MRS_Toolchain_Linux_x64_V210"
 - 自动设置内存访问和架构
 - 支持SVD文件寄存器视图
 
-### 2. Attach to CH32L103C8T6
+### 2. Attach to Chip
 - 连接到已运行的目标
 - 用于调试已启动的程序
 - 支持SVD文件寄存器视图
 
-### 3. Download Firmware
+### 3. Download and Run
 - 仅下载固件，不进入调试模式
 - 下载完成后自动复位
-- 支持SVD文件寄存器视图
-
-### 4. Download and Run
-- 下载固件并立即运行
-- 适合快速测试
-- 支持SVD文件寄存器视图
-
-### 5. No Debug Download
-- 使用OpenOCD命令行下载
-- 完全无调试器交互
-- 适合自动化构建流程
 
 ## 快速开始
 

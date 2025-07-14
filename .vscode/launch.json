@@ -56,7 +56,7 @@
             "toolchainPrefix": "riscv-wch-elf",
             "device": "CH32L103C8T6",
             "showDevDebugOutput": "raw",
-            "preLaunchCommands": [
+            "preAttachCommands": [
                 "set mem inaccessible-by-default off",
                 "set architecture riscv:rv32",
                 "set remotetimeout unlimited",
@@ -65,33 +65,26 @@
             "svdFile": "${workspaceFolder}/.vscode/CH32L103xx.svd"
         },
         {
-            "name": "Download and Run",
-            "type": "node",
+            // Hidden dummy configuration used only for compound tasks
+            "name": "Dummy",
+            "type": "cppdbg",
             "request": "launch",
-            "runtimeExecutable": "${config:WCH_TOOLCHAIN_BASE}/OpenOCD/OpenOCD/bin/openocd",
-            "args": [
-                "-s",
-                "${config:WCH_TOOLCHAIN_BASE}/OpenOCD/OpenOCD/share/openocd/scripts",
-                "-f",
-                "${config:WCH_TOOLCHAIN_BASE}/OpenOCD/OpenOCD/bin/wch-riscv.cfg",
-                "-c",
-                "chip_id CH32L10x",
-                "-c",
-                "init",
-                "-c",
-                "halt",
-                "-c",
-                "program ${workspaceFolder}/build/${config:WCH_ELF_FILENAME} verify reset",
-                "-c",
-                "exit"
-            ],
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": false,
-                "panel": "shared"
-            },
-            "preLaunchTask": "CMake Build"
+            "program": "${workspaceFolder}/build/${config:WCH_ELF_FILENAME}",
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "MIMode": "gdb",
+            "miDebuggerPath": "${config:WCH_TOOLCHAIN_BASE}/${config:WCH_GCC_NAME}/bin/riscv-wch-elf-gdb",
+            "externalConsole": false,
+        }
+    ],
+    "compounds": [
+        {
+            "name": "Download and Run",
+            "preLaunchTask": "Build & Flash",
+            "afterLaunchTask": "",
+            "configurations": [
+                "Dummy"
+            ]
         }
     ]
 }
