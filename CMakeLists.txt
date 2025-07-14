@@ -80,12 +80,16 @@ endif()
 # ——————————————————————————————————————————————
 # 4. include 目录 & 源文件
 # ——————————————————————————————————————————————
-include_directories(
+# 定义头文件目录变量
+set(INCLUDE_DIRS
         ${CMAKE_SOURCE_DIR}/Core
         ${CMAKE_SOURCE_DIR}/Debug
         ${CMAKE_SOURCE_DIR}/Peripheral/inc
         ${CMAKE_SOURCE_DIR}/User
 )
+
+# 应用头文件目录
+include_directories(${INCLUDE_DIRS})
 
 file(GLOB_RECURSE
         SRC_CORE      "Core/*.*"
@@ -152,20 +156,23 @@ if(DOXYGEN_FOUND)
     set(DOXYGEN_IN ${CMAKE_SOURCE_DIR}/.vscode/Doxyfile.in)
     set(DOXYGEN_OUT ${CMAKE_BINARY_DIR}/docs)
     
-    # 自动收集所有输入目录
+    # 从已收集的源文件中提取目录，避免重复检索
     set(DOXYGEN_INPUT_DIRS "")
-    foreach(dir Core Debug Peripheral/src Peripheral/inc Startup User)
-        if(EXISTS ${CMAKE_SOURCE_DIR}/${dir})
-            list(APPEND DOXYGEN_INPUT_DIRS ${CMAKE_SOURCE_DIR}/${dir})
-        endif()
+    foreach(source_file ${SOURCES})
+        get_filename_component(source_dir ${source_file} DIRECTORY)
+        list(APPEND DOXYGEN_INPUT_DIRS ${source_dir})
     endforeach()
     
-    # 将目录列表转换为空格分隔的字符串
+    # 添加头文件目录 (从 INCLUDE_DIRS 变量中获取)
+    list(APPEND DOXYGEN_INPUT_DIRS ${INCLUDE_DIRS})
+    
+    # 去重并转换为空格分隔的字符串
+    list(REMOVE_DUPLICATES DOXYGEN_INPUT_DIRS)
     string(REPLACE ";" " " DOXYGEN_INPUT "${DOXYGEN_INPUT_DIRS}")
     
     # 设置其他 Doxygen 变量
-    set(DOXYGEN_PROJECT_NAME "CH32L103 SimulateCDC Project")
-    set(DOXYGEN_PROJECT_BRIEF "USB CDC simulation for CH32L103 RISC-V microcontroller")
+    set(DOXYGEN_PROJECT_NAME ${PROJECT_NAME})
+    set(DOXYGEN_PROJECT_BRIEF ${PROJECT_NAME} API Documentation)
     set(DOXYGEN_OUTPUT_DIRECTORY ${DOXYGEN_OUT})
     
     # 检查模板文件是否存在
