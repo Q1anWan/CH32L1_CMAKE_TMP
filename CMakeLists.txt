@@ -113,7 +113,7 @@ add_link_options(
 #        -v                              # verbose
         -nostartfiles
         --specs=nano.specs
-#        --specs=nosys.specs
+        --specs=nosys.specs
         -Wl,-gc-sections
         -Wl,--print-memory-usage
         -Wl,-Map=${PROJECT_BINARY_DIR}/${PROJECT_NAME}.map
