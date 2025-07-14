@@ -3,10 +3,6 @@
         {
             "name": "CH32L103-RISC-V",
             "includePath": [
-                "${workspaceFolder}/Core",
-                "${workspaceFolder}/Debug",
-                "${workspaceFolder}/Peripheral/inc",
-                "${workspaceFolder}/User",
                 "${config:WCH_TOOLCHAIN_BASE}/${config:WCH_GCC_NAME}/riscv-wch-elf/include",
                 "${config:WCH_TOOLCHAIN_BASE}/${config:WCH_GCC_NAME}/lib/gcc/riscv-wch-elf/*/include",
                 "${config:WCH_TOOLCHAIN_BASE}/${config:WCH_GCC_NAME}/lib/gcc/riscv-wch-elf/*/include-fixed"

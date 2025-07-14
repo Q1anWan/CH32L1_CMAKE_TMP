@@ -21,8 +21,6 @@
         "*.S": "asm",
         "*.s": "asm",
         "*.ld": "c",
-        "*.dot": "dot",
-        "*.gv": "dot",
         "cstdio": "c"
     },
     "C_Cpp.clang_format_style": "{ BasedOnStyle: Google, IndentWidth: 4, ColumnLimit: 120 }",
@@ -50,6 +48,4 @@
     "cmake.autoSelectActiveFolder": false,
     "cortex-debug.openocdPath": "${config:WCH_TOOLCHAIN_BASE}/OpenOCD/OpenOCD/bin/openocd",
     "cortex-debug.gdbPath": "${config:WCH_TOOLCHAIN_BASE}/${config:WCH_GCC_NAME}/bin/riscv-wch-elf-gdb",
-    "terminal.integrated.defaultProfile.linux": "bash",
-    "graphviz-interactive-preview.dotPath": "/usr/bin/dot"
 }

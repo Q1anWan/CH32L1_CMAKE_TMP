@@ -115,7 +115,7 @@ set(LINKER_SCRIPT ${CMAKE_SOURCE_DIR}/Ld/Link.ld)
 add_link_options(
 #        -v                              # verbose
         -nostartfiles
-        # --specs=nano.specs
+        --specs=nano.specs
         --specs=nosys.specs
         -Wl,-gc-sections
         -Wl,--print-memory-usage
