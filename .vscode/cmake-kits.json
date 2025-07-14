@@ -15,7 +15,9 @@
             "CMAKE_FIND_ROOT_PATH": "${config:WCH_TOOLCHAIN_BASE}/${config:WCH_GCC_NAME}/riscv-wch-elf",
             "CMAKE_SYSTEM_NAME": "Generic",
             "CMAKE_SYSROOT": "${config:WCH_TOOLCHAIN_BASE}/${config:WCH_GCC_NAME}/riscv-wch-elf",
-            "CMAKE_BUILD_TYPE": "${config:BUILD_LEVEL}"
+            "CMAKE_C_COMPILER": "${config:WCH_TOOLCHAIN_BASE}/${config:WCH_GCC_NAME}/bin/riscv-wch-elf-gcc",
+            "CMAKE_CXX_COMPILER": "${config:WCH_TOOLCHAIN_BASE}/${config:WCH_GCC_NAME}/bin/riscv-wch-elf-g++",
+            "CMAKE_ASM_COMPILER": "${config:WCH_TOOLCHAIN_BASE}/${config:WCH_GCC_NAME}/bin/riscv-wch-elf-gcc"
         }
     }
 ]

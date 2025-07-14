@@ -30,6 +30,21 @@
     "cmake.configureOnOpen": true,
     "cmake.buildDirectory": "${workspaceFolder}/build",
     "cmake.generator": "Ninja",
+    "cmake.preferredGenerators": [
+        "Ninja"
+    ],
+    "cmake.useCMakePresets": "always",
+    "cmake.defaultVariants": {
+        "buildType": "${config:BUILD_LEVEL}",
+    },
+    "cmake.configureSettings": {
+        "CMAKE_BUILD_TYPE": "${config:BUILD_LEVEL}",
+        "BUILD_LEVEL": "${config:BUILD_LEVEL}"
+    },
+    "cmake.buildBeforeRun": true,
+    "cmake.clearOutputBeforeBuild": true,
+    "cmake.configureOnEdit": false,
+    "cmake.autoSelectActiveFolder": false,
     "cortex-debug.openocdPath": "${config:WCH_TOOLCHAIN_BASE}/OpenOCD/OpenOCD/bin/openocd",
     "cortex-debug.gdbPath": "${config:WCH_TOOLCHAIN_BASE}/${config:WCH_GCC_NAME}/bin/riscv-wch-elf-gdb",
     "terminal.integrated.defaultProfile.linux": "bash"

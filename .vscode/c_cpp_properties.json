@@ -46,7 +46,8 @@
                     "${config:WCH_TOOLCHAIN_BASE}/${config:WCH_GCC_NAME}/riscv-wch-elf/include"
                 ],
                 "limitSymbolsToIncludedHeaders": true
-            }
+            },
+            "configurationProvider": "ms-vscode.cmake-tools"
         }
     ],
     "version": 4

@@ -2,8 +2,11 @@
 
 ## 工具链配置
 
-本项目使用VSCode变量来管理工具链路径，方便在不同平台间迁移。
-
+本项目使用VSCode变量来管理工具链路径，方便在不同平台间迁移。  
+注意: 
+1. 必须使用CH32魔改的OpenOCD
+2. 必须使用CH32魔改的DAP-Link(WLink)
+3. 
 ### 1. 修改工具链基础路径
 
 编辑 `.vscode/settings.json` 文件中的 `WCH_TOOLCHAIN_BASE` 变量：
@@ -92,7 +95,7 @@ export WCH_TOOLCHAIN_BASE="/opt/MRS_Toolchain_Linux_x64_V210"
 
 ## Run Tasks说明
 ### 1. CMake工具
-- 包含Configure, Build, Clean操作
+- 包含Configure, Build, Clean等操作
 ### 2. OpenOCD工具
 - 包含Flash操作 
 

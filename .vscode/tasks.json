@@ -2,80 +2,37 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "CMake Configure",
-            "type": "shell",
-            "command": "cmake",
-            "args": [
-                "-S",
-                ".",
-                "-B",
-                "build",
-                "-G",
-                "Ninja",
-                "-DCMAKE_BUILD_TYPE=${config:BUILD_LEVEL}",
-                "-DCMAKE_C_COMPILER=${config:WCH_TOOLCHAIN_BASE}/${config:WCH_GCC_NAME}/bin/riscv-wch-elf-gcc",
-                "-DCMAKE_CXX_COMPILER=${config:WCH_TOOLCHAIN_BASE}/${config:WCH_GCC_NAME}/bin/riscv-wch-elf-g++"
-            ],
+            "label": "CMake-kit: Configure",
+            "type": "cmake",
+            "command": "configure",
             "group": "build",
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": false,
-                "panel": "shared"
-            },
             "problemMatcher": []
         },
         {
-            "label": "CMake Build",
-            "type": "shell",
-            "command": "cmake",
-            "args": [
-                "--build",
-                "build",
-                "--parallel"
-            ],
+            "label": "CMake-kit: Build",
+            "type": "cmake",
+            "command": "build",
             "group": {
                 "kind": "build",
                 "isDefault": true
             },
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": false,
-                "panel": "shared"
-            },
-            "problemMatcher": [
-                "$gcc"
-            ],
-            "dependsOn": "CMake Configure"
-        },
-        {
-            "label": "Build & Flash",
-            "dependsOrder": "sequence",
-            "dependsOn": [
-                "CMake Configure",
-                "CMake Build",
-                "Flash with OpenOCD"
-            ]
-        },
-        {
-            "label": "CMake Clean",
-            "type": "shell",
-            "command": "cmake",
-            "args": [
-                "--build",
-                "build",
-                "--target",
-                "clean"
-            ],
-            "group": "build",
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": false,
-                "panel": "shared"
-            },
+            "dependsOn": "CMake-kit: Configure",
             "problemMatcher": []
+        },
+        {
+            "label": "CMake-kit: Clean",
+            "type": "cmake",
+            "command": "clean",
+            "group": "build",
+            "problemMatcher": []
+        },
+        {
+            "label": "CMake-kit: Clean Rebuild",
+            "type": "cmake",
+            "command": "cleanRebuild",
+            "group": "build",
+            "problemMatcher": [],
+            "detail": "Clean and rebuild the entire project"
         },
         {
             "label": "Flash with OpenOCD",
@@ -105,8 +62,16 @@
                 "panel": "shared"
             },
             "problemMatcher": [],
-            "dependsOn": "CMake Build",
+            "dependsOn": "CMake-kit: Build",
             "detail": "Flash firmware directly using OpenOCD command line"
-        }
+        },
+        {
+            "label": "Build & Flash",
+            "dependsOrder": "sequence",
+            "dependsOn": [
+                "CMake-kit: Build",
+                "Flash with OpenOCD"
+            ]
+        },
     ]
 }

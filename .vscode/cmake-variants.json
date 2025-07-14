@@ -1,0 +1,44 @@
+{
+    "buildType": {
+        "default": "relwithdebinfo",
+        "description": "Build type",
+        "choices": {
+            "debug": {
+                "short": "Debug",
+                "long": "Debug build with optimizations disabled",
+                "buildType": "Debug",
+                "settings": {
+                    "CMAKE_BUILD_TYPE": "Debug",
+                    "BUILD_LEVEL": "Debug"
+                }
+            },
+            "release": {
+                "short": "Release",
+                "long": "Release build with optimizations enabled",
+                "buildType": "Release",
+                "settings": {
+                    "CMAKE_BUILD_TYPE": "Release",
+                    "BUILD_LEVEL": "Release"
+                }
+            },
+            "relwithdebinfo": {
+                "short": "RelWithDebInfo",
+                "long": "Release build with debug information",
+                "buildType": "RelWithDebInfo",
+                "settings": {
+                    "CMAKE_BUILD_TYPE": "RelWithDebInfo",
+                    "BUILD_LEVEL": "RelWithDebInfo"
+                }
+            },
+            "minsizerel": {
+                "short": "MinSizeRel",
+                "long": "Release build optimized for size",
+                "buildType": "MinSizeRel",
+                "settings": {
+                    "CMAKE_BUILD_TYPE": "MinSizeRel",
+                    "BUILD_LEVEL": "MinSizeRel"
+                }
+            }
+        }
+    }
+}
