@@ -71,7 +71,7 @@
             "command": "bash",
             "args": [
                 "-c",
-                "cmake --build $(dirname $(dirname ${file}))/build --target doc_doxygen && DOC_PATH=\"$(realpath $(dirname $(dirname ${file}))/build/docs/html)\" && echo Documentation generated at: $DOC_PATH && echo Open $DOC_PATH/index.html in a browser."
+                "cmake --build ${workspaceFolder}/build --target doc_doxygen && DOC_PATH=\"${workspaceFolder}/build/docs/html\" && echo Documentation generated at: $DOC_PATH && echo Open $DOC_PATH/index.html in a browser."
             ],
             "options": {
                 "cwd": "${workspaceFolder}"
