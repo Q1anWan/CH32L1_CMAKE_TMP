@@ -68,13 +68,14 @@
         {
             "label": "Generate Documentation",
             "type": "shell",
-            "command": "cmake",
+            "command": "bash",
             "args": [
-                "--build",
-                "build",
-                "--target",
-                "doc_doxygen"
+                "-c",
+                "cmake --build $(dirname $(dirname ${file}))/build --target doc_doxygen && DOC_PATH=\"$(realpath $(dirname $(dirname ${file}))/build/docs/html)\" && echo Documentation generated at: $DOC_PATH && echo Open $DOC_PATH/index.html in a browser."
             ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
             "group": "build",
             "presentation": {
                 "echo": true,
@@ -84,7 +85,7 @@
             },
             "problemMatcher": [],
             "dependsOn": "CMake-kit: Build",
-            "detail": "Generate API documentation using Doxygen"
-        },
+            "detail": "Generate API documentation using Doxygen and display output path"
+        }
     ]
 }
